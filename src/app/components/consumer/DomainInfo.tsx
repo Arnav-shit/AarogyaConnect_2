@@ -1,16 +1,17 @@
 import React from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { useApp } from '@/contexts/AppContext';
-import { Button } from '@/app/components/ui/button';
-import { Card, CardContent } from '@/app/components/ui/card';
-import { Heart, ArrowLeft, AlertCircle, CheckCircle2, Stethoscope, Eye, Smile, Baby, HeartPulse, Droplet } from 'lucide-react';
+import { useApp } from '../../../contexts/AppContext';
+import { Button } from '../ui/button';
+import { Card, CardContent } from '../ui/card';
+import { Heart, ArrowLeft, AlertCircle, CheckCircle2, Stethoscope, Eye, Smile, Baby, HeartPulse, Droplet, Bone } from 'lucide-react';
 
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+const iconMap: Record<string, React.ComponentType<any>> = {
   stethoscope: Stethoscope,
   eye: Eye,
   smile: Smile,
   baby: Baby,
   'heart-pulse': HeartPulse,
+  bone: Bone,
   droplet: Droplet,
 };
 
@@ -51,7 +52,7 @@ export function DomainInfo() {
             <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
               <Heart className="w-6 h-6 text-green-600" />
             </div>
-            <span className="text-xl">HealthCamp</span>
+            <span className="text-xl">AarogyaConnect</span>
           </div>
         </div>
       </header>

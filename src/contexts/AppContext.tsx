@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { database } from '../config/firebase';
+import { ref, onValue, push, set, remove, update, DataSnapshot } from 'firebase/database';
 
 export interface Domain {
   id: string;
@@ -164,20 +166,29 @@ const initialDomains: Domain[] = [
     image: 'women-child'
   },
   {
-    id: 'elderly-care',
-    name: 'Elderly Care',
-    icon: 'heart-pulse',
-    description: 'Senior citizen health checkup, chronic disease management',
-    detailedInfo: 'Specialized healthcare services for senior citizens including management of chronic diseases like diabetes, hypertension, arthritis, and other age-related conditions. We provide comprehensive care with special attention to mobility and lifestyle needs.',
-    commonConditions: ['Diabetes', 'Hypertension', 'Arthritis', 'Heart Issues', 'Memory Problems', 'Joint Pain'],
-    whenToVisit: [
-      'Regular health monitoring',
-      'Chronic disease management',
-      'Difficulty in daily activities',
-      'Memory or balance issues',
-      'Medication review needed'
-    ],
-    image: 'elderly-care'
+    id: 'bones-muscles',
+  name: 'Bones & Muscles',
+  icon: 'bone',
+  description: 'Care for joint pain, muscle injuries, fractures, and mobility issues',
+  detailedInfo: 'Comprehensive bone and muscle care focusing on pain relief, injury recovery, and long-term mobility improvement. Our services include diagnosis and management of joint disorders, muscle strains, fractures, arthritis, and posture-related issues, helping patients regain strength and movement safely.',
+  commonConditions: [
+    'Joint Pain',
+    'Back Pain',
+    'Neck Pain',
+    'Muscle Strain',
+    'Fractures',
+    'Arthritis',
+    'Posture Problems'
+  ],
+  whenToVisit: [
+    'Persistent joint or muscle pain',
+    'Difficulty in movement or stiffness',
+    'Sports or work-related injuries',
+    'Back or neck pain affecting daily life',
+    'Post-fracture rehabilitation',
+    'Age-related bone weakness'
+  ],
+  image: 'bones-muscles'
   },
   {
     id: 'skin-care',
@@ -396,6 +407,88 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [hospitals, setHospitals] = useState<Hospital[]>(initialHospitals);
   const [bookings, setBookings] = useState<Booking[]>(initialBookings);
 
+  // Firebase Real-time listeners
+  useEffect(() => {
+    if (!database) {
+      // Firebase DB not configured — skip realtime listeners and use local data
+      // eslint-disable-next-line no-console
+      console.log('Firebase Realtime Database not configured; using local mock data.');
+      return;
+    }
+    // Listen to camps from Firebase
+    const campsRef = ref(database, 'camps');
+    const unsubscribeCamps = onValue(campsRef, (snapshot: DataSnapshot) => {
+      if (snapshot.exists()) {
+        const firebaseCamps = Object.values(snapshot.val()) as Camp[];
+        setCamps(firebaseCamps);
+        console.log('✓ Loaded camps from Firebase:', firebaseCamps.length);
+      } else {
+        console.log('⚠ /camps is empty in Firebase, seeding with initial data...');
+        // Seed Firebase with local initial data if empty
+        if (initialCamps && initialCamps.length > 0) {
+          const map: Record<string, Camp> = {};
+          initialCamps.forEach(c => (map[c.id] = c));
+          set(campsRef, map).then(() => {
+            console.log('✓ Seeded Firebase /camps with', initialCamps.length, 'camps');
+            setCamps(initialCamps);
+          }).catch((err: any) => console.log('✗ Failed to seed camps:', err));
+        }
+      }
+    }, (error: Error) => {
+      console.log('✗ Camps listener error:', error.message);
+    });
+
+    // Listen to hospitals from Firebase
+    const hospitalsRef = ref(database, 'hospitals');
+    const unsubscribeHospitals = onValue(hospitalsRef, (snapshot: DataSnapshot) => {
+      if (snapshot.exists()) {
+        const firebaseHospitals = Object.values(snapshot.val()) as Hospital[];
+        setHospitals(firebaseHospitals);
+        console.log('✓ Loaded hospitals from Firebase:', firebaseHospitals.length);
+      } else {
+        console.log('⚠ /hospitals is empty in Firebase, seeding with initial data...');
+        if (initialHospitals && initialHospitals.length > 0) {
+          const map: Record<string, Hospital> = {};
+          initialHospitals.forEach(h => (map[h.id] = h));
+          set(hospitalsRef, map).then(() => {
+            console.log('✓ Seeded Firebase /hospitals with', initialHospitals.length, 'hospitals');
+            setHospitals(initialHospitals);
+          }).catch((err: any) => console.log('✗ Failed to seed hospitals:', err));
+        }
+      }
+    }, (error: Error) => {
+      console.log('✗ Hospitals listener error:', error.message);
+    });
+
+    // Listen to bookings from Firebase
+    const bookingsRef = ref(database, 'bookings');
+    const unsubscribeBookings = onValue(bookingsRef, (snapshot: DataSnapshot) => {
+      if (snapshot.exists()) {
+        const firebaseBookings = Object.values(snapshot.val()) as Booking[];
+        setBookings(firebaseBookings);
+        console.log('✓ Loaded bookings from Firebase:', firebaseBookings.length);
+      } else {
+        console.log('⚠ /bookings is empty in Firebase, seeding with initial data...');
+        if (initialBookings && initialBookings.length > 0) {
+          const map: Record<string, Booking> = {};
+          initialBookings.forEach(b => (map[b.id] = b));
+          set(bookingsRef, map).then(() => {
+            console.log('✓ Seeded Firebase /bookings with', initialBookings.length, 'bookings');
+            setBookings(initialBookings);
+          }).catch((err: any) => console.log('✗ Failed to seed bookings:', err));
+        }
+      }
+    }, (error: Error) => {
+      console.log('✗ Bookings listener error:', error.message);
+    });
+
+    return () => {
+      unsubscribeCamps();
+      unsubscribeHospitals();
+      unsubscribeBookings();
+    };
+  }, []);
+
   // Domain operations
   const addDomain = (domain: Omit<Domain, 'id'>) => {
     const newDomain = { ...domain, id: `domain-${Date.now()}` };
@@ -414,28 +507,64 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const addCamp = (camp: Omit<Camp, 'id'>) => {
     const newCamp = { ...camp, id: `camp-${Date.now()}`, type: 'camp' as const };
     setCamps([...camps, newCamp]);
+    // Save to Firebase
+    if (database) {
+      set(ref(database, `camps/${newCamp.id}`), newCamp).catch((err: any) =>
+        console.log('Firebase save error:', err)
+      );
+    }
   };
 
   const updateCamp = (id: string, campUpdate: Partial<Camp>) => {
     setCamps(camps.map(c => (c.id === id ? { ...c, ...campUpdate } : c)));
+    // Update in Firebase
+    if (database) {
+      update(ref(database, `camps/${id}`), campUpdate).catch((err: any) =>
+        console.log('Firebase update error:', err)
+      );
+    }
   };
 
   const deleteCamp = (id: string) => {
     setCamps(camps.filter(c => c.id !== id));
+    // Delete from Firebase
+    if (database) {
+      remove(ref(database, `camps/${id}`)).catch((err: any) =>
+        console.log('Firebase delete error:', err)
+      );
+    }
   };
 
   // Hospital operations
   const addHospital = (hospital: Omit<Hospital, 'id'>) => {
     const newHospital = { ...hospital, id: `hosp-${Date.now()}`, type: 'hospital' as const };
     setHospitals([...hospitals, newHospital]);
+    // Save to Firebase
+    if (database) {
+      set(ref(database, `hospitals/${newHospital.id}`), newHospital).catch((err: any) =>
+        console.log('Firebase save error:', err)
+      );
+    }
   };
 
   const updateHospital = (id: string, hospitalUpdate: Partial<Hospital>) => {
     setHospitals(hospitals.map(h => (h.id === id ? { ...h, ...hospitalUpdate } : h)));
+    // Update in Firebase
+    if (database) {
+      update(ref(database, `hospitals/${id}`), hospitalUpdate).catch((err: any) =>
+        console.log('Firebase update error:', err)
+      );
+    }
   };
 
   const deleteHospital = (id: string) => {
     setHospitals(hospitals.filter(h => h.id !== id));
+    // Delete from Firebase
+    if (database) {
+      remove(ref(database, `hospitals/${id}`)).catch((err: any) =>
+        console.log('Firebase delete error:', err)
+      );
+    }
   };
 
   // Booking operations
@@ -448,6 +577,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
       status: 'confirmed',
     };
     setBookings([...bookings, newBooking]);
+    // Save to Firebase
+    if (database) {
+      set(ref(database, `bookings/${bookingId}`), newBooking).catch((err: any) =>
+        console.log('Firebase save error:', err)
+      );
+    }
 
     // Update slots for camps
     if (booking.providerType === 'camp') {

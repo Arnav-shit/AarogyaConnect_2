@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useApp, Camp, Doctor } from '@/contexts/AppContext';
-import { Button } from '@/app/components/ui/button';
-import { Input } from '@/app/components/ui/input';
-import { Label } from '@/app/components/ui/label';
-import { Textarea } from '@/app/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card';
-import { Badge } from '@/app/components/ui/badge';
+import { useApp, Camp, Doctor } from '../../../contexts/AppContext';
+import { Button } from '../../components/ui/button';
+import { Input } from '../../components/ui/input';
+import { Label } from '../../components/ui/label';
+import { Textarea } from '../../components/ui/textarea';
+import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
+import { Badge } from '../../components/ui/badge';
 import { ArrowLeft, Plus, X } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -26,6 +26,15 @@ export function CreateEditCamp() {
     description: '',
     domainIds: [] as string[],
   });
+
+  const toggleDomain = (domainId: string) => {
+    setFormData(prev => ({
+      ...prev,
+      domainIds: prev.domainIds.includes(domainId)
+        ? prev.domainIds.filter(d => d !== domainId)
+        : [...prev.domainIds, domainId],
+    }));
+  };
 
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [newDoctor, setNewDoctor] = useState({ name: '', gender: 'Male' as 'Male' | 'Female', specialization: '' });
@@ -233,6 +242,23 @@ export function CreateEditCamp() {
                 required
                 rows={4}
               />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Domain(s)</Label>
+              <div className="flex flex-wrap gap-2">
+                {domains.map(d => (
+                  <label key={d.id} className={`px-3 py-1 rounded border ${formData.domainIds.includes(d.id) ? 'bg-blue-600 text-white' : 'bg-white text-gray-700'}`}>
+                    <input
+                      type="checkbox"
+                      checked={formData.domainIds.includes(d.id)}
+                      onChange={() => toggleDomain(d.id)}
+                      className="mr-2"
+                    />
+                    {d.name}
+                  </label>
+                ))}
+              </div>
             </div>
           </CardContent>
         </Card>

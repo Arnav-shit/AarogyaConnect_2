@@ -1,28 +1,28 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from '@/contexts/AuthContext';
-import { AppProvider } from '@/contexts/AppContext';
-import { Toaster } from '@/app/components/ui/sonner';
+import { AuthProvider } from '../contexts/AuthContext';
+import { AppProvider } from '../contexts/AppContext';
+import { Toaster } from './components/ui/sonner';
 
 // Consumer Components
-import { DomainSelection } from '@/app/components/consumer/DomainSelection';
-import { DomainInfo } from '@/app/components/consumer/DomainInfo';
-import { ProvidersList } from '@/app/components/consumer/ProvidersList';
-import { CampDetails } from '@/app/components/consumer/CampDetails';
-import { HospitalDetails } from '@/app/components/consumer/HospitalDetails';
-import { BookProvider } from '@/app/components/consumer/BookProvider';
-import { BookingConfirmation } from '@/app/components/consumer/BookingConfirmation';
+import { DomainSelection } from './components/consumer/DomainSelection';
+import { DomainInfo } from './components/consumer/DomainInfo';
+import { ProvidersList } from './components/consumer/ProvidersList';
+import { CampDetails } from './components/consumer/CampDetails';
+import { HospitalDetails } from './components/consumer/HospitalDetails';
+import { BookProvider } from './components/consumer/BookProvider';
+import { BookingConfirmation } from './components/consumer/BookingConfirmation';
 
 // Admin Components
-import { AdminLogin } from '@/app/components/admin/AdminLogin';
-import { AdminLayout } from '@/app/components/layout/AdminLayout';
-import { Dashboard } from '@/app/components/admin/Dashboard';
-import { ManageCamps } from '@/app/components/admin/ManageCamps';
-import { ManageHospitals } from '@/app/components/admin/ManageHospitals';
-import { CreateEditCamp } from '@/app/components/admin/CreateEditCamp';
-import { Registrations } from '@/app/components/admin/Registrations';
-import { AdminPlaceholder } from '@/app/components/admin/AdminPlaceholder';
-import { ProtectedRoute } from '@/app/components/ProtectedRoute';
+import { AdminLogin } from './components/admin/AdminLogin';
+import { AdminLayout } from './components/layout/AdminLayout';
+import { Dashboard } from './components/admin/Dashboard';
+import { ManageCamps } from './components/admin/ManageCamps';
+import { ManageHospitals } from './components/admin/ManageHospitals';
+import { CreateEditCamp } from './components/admin/CreateEditCamp';
+import { Registrations } from './components/admin/Registrations';
+import { AdminPlaceholder } from './components/admin/AdminPlaceholder';
+import { ProtectedRoute } from './components/ProtectedRoute';
 
 import { Bell, MessageSquare, Settings, Layers } from 'lucide-react';
 

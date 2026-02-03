@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { useApp } from '@/contexts/AppContext';
-import { Button } from '@/app/components/ui/button';
-import { Card, CardContent } from '@/app/components/ui/card';
-import { Badge } from '@/app/components/ui/badge';
+import { useApp } from '../../../contexts/AppContext';
+import { Button } from '../ui/button';
+import { Card, CardContent } from '../ui/card';
+import { Badge } from '../ui/badge';
 import {
   Heart,
   ArrowLeft,

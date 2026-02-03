@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useApp } from '@/contexts/AppContext';
-import { Button } from '@/app/components/ui/button';
-import { Card, CardContent } from '@/app/components/ui/card';
-import { Badge } from '@/app/components/ui/badge';
-import { Input } from '@/app/components/ui/input';
+import { useApp } from '../../../contexts/AppContext';
+import { Button } from '../../components/ui/button';
+import { Card, CardContent } from '../../components/ui/card';
+import { Badge } from '../../components/ui/badge';
+import { Input } from '../../components/ui/input';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,7 +14,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/app/components/ui/alert-dialog';
+} from '../../components/ui/alert-dialog';
 import { MapPin, Calendar, Users, Edit, Trash2, Search, PlusCircle } from 'lucide-react';
 
 export function ManageCamps() {
@@ -138,7 +138,7 @@ export function ManageCamps() {
 
                 <div className="mt-4 pt-4 border-t border-gray-100">
                   <div className="flex flex-wrap gap-2">
-                    {camp.specializations.map((spec, index) => (
+                    {[...new Set(camp.doctors.map(d => d.specialization))].map((spec, index) => (
                       <span
                         key={index}
                         className="text-xs px-2 py-1 bg-blue-50 text-blue-700 rounded"

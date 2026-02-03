@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { useApp, ServiceProvider } from '@/contexts/AppContext';
-import { Button } from '@/app/components/ui/button';
-import { Card, CardContent } from '@/app/components/ui/card';
-import { Badge } from '@/app/components/ui/badge';
-import { Input } from '@/app/components/ui/input';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/tabs';
+import { useApp } from '../../../contexts/AppContext';
+import { Button } from '../ui/button';
+import { Card, CardContent } from '../ui/card';
+import { Badge } from '../ui/badge';
+import { Input } from '../ui/input';
+import { Tabs, TabsList, TabsTrigger } from '../ui/tabs';
 import {
   Heart,
   ArrowLeft,
@@ -225,7 +225,7 @@ export function ProvidersList() {
                   <div className="mb-4 pt-4 border-t border-gray-100">
                     <p className="text-sm text-gray-500 mb-2">Services:</p>
                     <div className="flex flex-wrap gap-2">
-                      {provider.services.slice(0, 3).map((service, index) => (
+                      {(provider.services || []).slice(0, 3).map((service, index) => (
                         <span
                           key={index}
                           className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded"
@@ -233,9 +233,9 @@ export function ProvidersList() {
                           {service}
                         </span>
                       ))}
-                      {provider.services.length > 3 && (
+                      {(provider.services || []).length > 3 && (
                         <span className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded">
-                          +{provider.services.length - 3} more
+                          +{(provider.services || []).length - 3} more
                         </span>
                       )}
                     </div>
@@ -245,8 +245,8 @@ export function ProvidersList() {
                   <div className="mb-4 pb-4 border-b border-gray-100">
                     <p className="text-sm text-gray-500 mb-2">Doctors:</p>
                     <p className="text-sm text-gray-700">
-                      {provider.doctors.slice(0, 2).map(d => d.name).join(', ')}
-                      {provider.doctors.length > 2 && ` +${provider.doctors.length - 2} more`}
+                      {(provider.doctors || []).slice(0, 2).map(d => d.name).join(', ')}
+                      {(provider.doctors || []).length > 2 && ` +${(provider.doctors || []).length - 2} more`}
                     </p>
                   </div>
 

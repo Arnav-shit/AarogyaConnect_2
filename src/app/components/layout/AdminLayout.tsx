@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
-import { Button } from '@/app/components/ui/button';
+import { useAuth } from '../../../contexts/AuthContext';
+import { Button } from '../ui/button';
 import {
   LayoutDashboard,
   Calendar,
@@ -51,7 +51,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
       <div className="lg:hidden bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Heart className="w-6 h-6 text-green-600" />
-          <span className="text-lg">HealthCamp Admin</span>
+          <span className="text-lg">AarogyaConnect Admin</span>
         </div>
         <Button
           variant="ghost"
@@ -77,7 +77,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
                 <Heart className="w-6 h-6 text-green-600" />
               </div>
               <div>
-                <h1 className="text-lg">HealthCamp</h1>
+                <h1 className="text-lg">AarogyaConnect</h1>
                 <p className="text-xs text-gray-500">Admin Panel</p>
               </div>
             </div>

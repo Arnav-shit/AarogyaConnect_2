@@ -1,6 +1,6 @@
 import React from 'react';
-import { useApp } from '@/contexts/AppContext';
-import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card';
+import { useApp } from '../../../contexts/AppContext';
+import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import { Calendar, Users, Clock, AlertCircle } from 'lucide-react';
 
 export function Dashboard() {
@@ -124,7 +124,7 @@ export function Dashboard() {
                     <div className="flex items-start justify-between">
                       <div>
                         <h3 className="font-medium">{booking.userName}</h3>
-                        <p className="text-sm text-gray-600">{booking.campName}</p>
+                        <p className="text-sm text-gray-600">{booking.providerName}</p>
                         <p className="text-xs text-gray-500 mt-1">
                           {booking.age} years • {booking.gender} • {booking.mobile}
                         </p>

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { useApp } from '@/contexts/AppContext';
-import { Button } from '@/app/components/ui/button';
-import { Card, CardContent } from '@/app/components/ui/card';
+import { useApp } from '../../../contexts/AppContext';
+import { Button } from '../ui/button';
+import { Card, CardContent } from '../ui/card';
 import { Heart, CheckCircle2, Calendar, MapPin, Phone, User, Building2, Tent } from 'lucide-react';
 
 export function BookingConfirmation() {

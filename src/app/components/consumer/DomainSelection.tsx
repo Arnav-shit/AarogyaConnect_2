@@ -1,16 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useApp } from '@/contexts/AppContext';
-import { Button } from '@/app/components/ui/button';
-import { Card, CardContent } from '@/app/components/ui/card';
-import { Heart, Stethoscope, Eye, Smile, Baby, HeartPulse, Droplet, ArrowRight } from 'lucide-react';
+import { useApp } from '../../../contexts/AppContext';
+import { Button } from '../ui/button';
+import { Card, CardContent } from '../ui/card';
+import { Heart, Stethoscope, Eye, Smile, Baby, HeartPulse, Droplet, ArrowRight, Bone } from 'lucide-react';
 
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+const iconMap: Record<string, React.ComponentType<any>> = {
   stethoscope: Stethoscope,
   eye: Eye,
   smile: Smile,
   baby: Baby,
   'heart-pulse': HeartPulse,
+  bone: Bone,
   droplet: Droplet,
 };
 
@@ -26,7 +27,7 @@ export function DomainSelection() {
             <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
               <Heart className="w-6 h-6 text-green-600" />
             </div>
-            <span className="text-xl">HealthCamp</span>
+            <span className="text-xl">AarogyaConnect</span>
           </div>
           <Link to="/admin/login">
             <Button variant="outline">Admin Login</Button>
@@ -123,7 +124,7 @@ export function DomainSelection() {
         <div className="container mx-auto px-4 text-center">
           <div className="flex items-center justify-center gap-2 mb-4">
             <Heart className="w-6 h-6 text-green-400" />
-            <span className="text-xl">HealthCamp</span>
+            <span className="text-xl">AarogyaConnect</span>
           </div>
           <p className="text-gray-400 mb-4">Bringing quality healthcare to rural communities</p>
           <p className="text-sm text-gray-500">© 2026 HealthCamp. All rights reserved.</p>
