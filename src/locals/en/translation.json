@@ -1,0 +1,82 @@
+{
+  "common": {
+    "adminLogin": "Admin Login",
+    "learnMore": "Learn More",
+    "welcomeBack": "Welcome back! Here's what's happening today."
+  },
+
+  "home": {
+    "heroTitle": "Quality Healthcare for Everyone",
+    "heroSubtitle": "Select a healthcare domain to find camps and hospitals near you",
+    "sectionTitle": "What Are You Looking For?",
+    "sectionSubtitle": "Choose the healthcare service you need",
+    "whyChooseUs": "Why Choose Us?",
+    "benefit1Title": "Expert Doctors",
+    "benefit1Desc": "Qualified medical professionals",
+    "benefit2Title": "Affordable Care",
+    "benefit2Desc": "Free camps & subsidized treatments",
+    "benefit3Title": "Easy Access",
+    "benefit3Desc": "Healthcare in your village"
+  },
+
+  "domains": {
+    "general": {
+      "title": "General Health",
+      "desc": "Complete health checkup and general medical consultation"
+    },
+    "eye": {
+      "title": "Eye Care",
+      "desc": "Eye examination, vision testing, and eye disease screening"
+    },
+    "dental": {
+      "title": "Dental Care",
+      "desc": "Dental examination, cavity treatment, and oral health education"
+    },
+    "womenChild": {
+      "title": "Women & Child Health",
+      "desc": "Maternal care, child health, vaccination, and nutrition counseling"
+    },
+    "bones": {
+      "title": "Bones & Muscles",
+      "desc": "Care for joint pain, fractures, and mobility issues"
+    },
+    "skin": {
+      "title": "Skin Care",
+      "desc": "Skin examination, allergy treatment, and dermatology consultation"
+    }
+  },
+
+  "admin": {
+    "title": "AarogyaConnect Admin",
+    "panel": "Admin Panel",
+    "dashboard": "Dashboard",
+    "domains": "Manage Domains",
+    "camps": "Manage Camps",
+    "hospitals": "Manage Hospitals",
+    "registrations": "Registrations",
+    "notifications": "Notifications",
+    "feedback": "Feedback & Queries",
+    "settings": "Settings",
+    "logout": "Logout",
+    "user": "Admin User",
+
+    "overview": "Dashboard Overview",
+    "upcomingCamps": "Upcoming Camps",
+    "totalRegistrations": "Total Registrations",
+    "todaysCamps": "Today's Camps",
+    "pendingConfirmations": "Pending Confirmations",
+
+    "activeCamps": "Active medical camps",
+    "confirmedBookings": "Confirmed bookings",
+    "scheduledToday": "Camps scheduled today",
+    "awaitingConfirmation": "Awaiting confirmation",
+
+    "noUpcomingCamps": "No upcoming camps scheduled",
+    "noRecentBookings": "No recent bookings"
+  },
+
+  "footer": {
+    "tagline": "Bringing quality healthcare to rural communities",
+    "rights": "All rights reserved."
+  }
+}

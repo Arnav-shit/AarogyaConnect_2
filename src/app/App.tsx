@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from '../contexts/AuthContext';
 import { AppProvider } from '../contexts/AppContext';
 import { Toaster } from './components/ui/sonner';
+import { AppLayout } from './components/layout/AppLayout';
 
 // Consumer Components
 import { DomainSelection } from './components/consumer/DomainSelection';
@@ -32,20 +33,100 @@ export default function App() {
       <AppProvider>
         <BrowserRouter>
           <Routes>
-            {/* Consumer Routes */}
-            <Route path="/" element={<DomainSelection />} />
-            <Route path="/domain/:domainId" element={<DomainInfo />} />
-            <Route path="/domain/:domainId/providers" element={<ProvidersList />} />
-            <Route path="/camp/:id" element={<CampDetails />} />
-            <Route path="/hospital/:id" element={<HospitalDetails />} />
-            <Route path="/camp/:id/book" element={<BookProvider />} />
-            <Route path="/hospital/:id/book" element={<BookProvider />} />
-            <Route path="/booking-confirmation/:bookingId" element={<BookingConfirmation />} />
 
-            {/* Admin Login */}
-            <Route path="/admin/login" element={<AdminLogin />} />
+            {/* ===================== */}
+            {/* CONSUMER / PUBLIC ROUTES */}
+            {/* ===================== */}
 
-            {/* Protected Admin Routes */}
+            <Route
+              path="/"
+              element={
+                <AppLayout>
+                  <DomainSelection />
+                </AppLayout>
+              }
+            />
+
+            <Route
+              path="/domain/:domainId"
+              element={
+                <AppLayout>
+                  <DomainInfo />
+                </AppLayout>
+              }
+            />
+
+            <Route
+              path="/domain/:domainId/providers"
+              element={
+                <AppLayout>
+                  <ProvidersList />
+                </AppLayout>
+              }
+            />
+
+            <Route
+              path="/camp/:id"
+              element={
+                <AppLayout>
+                  <CampDetails />
+                </AppLayout>
+              }
+            />
+
+            <Route
+              path="/hospital/:id"
+              element={
+                <AppLayout>
+                  <HospitalDetails />
+                </AppLayout>
+              }
+            />
+
+            <Route
+              path="/camp/:id/book"
+              element={
+                <AppLayout>
+                  <BookProvider />
+                </AppLayout>
+              }
+            />
+
+            <Route
+              path="/hospital/:id/book"
+              element={
+                <AppLayout>
+                  <BookProvider />
+                </AppLayout>
+              }
+            />
+
+            <Route
+              path="/booking-confirmation/:bookingId"
+              element={
+                <AppLayout>
+                  <BookingConfirmation />
+                </AppLayout>
+              }
+            />
+
+            {/* ===================== */}
+            {/* ADMIN LOGIN (PUBLIC) */}
+            {/* ===================== */}
+
+            <Route
+              path="/admin/login"
+              element={
+                <AppLayout>
+                  <AdminLogin />
+                </AppLayout>
+              }
+            />
+
+            {/* ===================== */}
+            {/* PROTECTED ADMIN ROUTES */}
+            {/* ===================== */}
+
             <Route
               path="/admin/dashboard"
               element={
@@ -56,6 +137,7 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
+
             <Route
               path="/admin/domains"
               element={
@@ -70,6 +152,7 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
+
             <Route
               path="/admin/camps"
               element={
@@ -80,6 +163,7 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
+
             <Route
               path="/admin/camps/new"
               element={
@@ -90,6 +174,7 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
+
             <Route
               path="/admin/camps/edit/:id"
               element={
@@ -100,6 +185,7 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
+
             <Route
               path="/admin/hospitals"
               element={
@@ -110,6 +196,7 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
+
             <Route
               path="/admin/registrations"
               element={
@@ -120,6 +207,7 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
+
             <Route
               path="/admin/notifications"
               element={
@@ -134,6 +222,7 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
+
             <Route
               path="/admin/feedback"
               element={
@@ -148,6 +237,7 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
+
             <Route
               path="/admin/settings"
               element={
@@ -166,8 +256,9 @@ export default function App() {
             {/* Redirect /admin to dashboard */}
             <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
 
-            {/* 404 - Redirect to home */}
+            {/* 404 */}
             <Route path="*" element={<Navigate to="/" replace />} />
+
           </Routes>
         </BrowserRouter>
         <Toaster />
